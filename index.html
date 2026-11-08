@@ -20,6 +20,7 @@
     --icon: linear-gradient(135deg, #A9B8E0 0%, #3A4F8F 38%, #091B4C 75%);
     --icon-light: linear-gradient(135deg, #FFFFFF 0%, #F3F7FC 45%, #DCE6F5 100%);
     --shadow: 0 6px 18px rgba(9, 27, 76, .10);
+    --gap: 16px;
   }
   * { box-sizing: border-box; margin: 0; }
   html { background: var(--paper); }
@@ -28,53 +29,57 @@
     color: #000;
     min-height: 100vh;
     background: linear-gradient(160deg, #FFFFFF 0%, var(--paper) 35%, var(--ice) 100%) fixed;
-    display: flex; justify-content: center;
-    padding: 0 16px 40px;
     -webkit-font-smoothing: antialiased;
   }
-  .wrap { width: 100%; max-width: 440px; }
+  .wrap {
+    width: 100%; max-width: 480px; margin: 0 auto;
+    padding: 0 16px 40px;
+    display: grid; gap: var(--gap);
+  }
 
-  /* Шапка — как панель иконок шаблона */
+  /* ---------- Шапка ---------- */
   .hero {
     margin: 0 -16px;
-    padding: 48px 24px 64px;
+    padding: 40px 24px 60px;
     background: linear-gradient(135deg, var(--navy) 0%, #1E3373 45%, var(--blue) 100%);
     color: #fff;
     border-radius: 0 0 24px 24px;
     text-align: center;
+    display: flex; flex-direction: column; align-items: center;
   }
-  @media (min-width: 472px) { .hero { margin: 24px 0 0; border-radius: 24px; } }
+  .emblem { display: none; }
+  .emblem img { display: block; height: 100%; width: auto; }
   .avatar {
-    width: 96px; height: 96px; margin: 0 auto 20px; border-radius: 50%;
-    background: var(--icon-light);
-    color: var(--navy);
+    width: 96px; height: 96px; margin-bottom: 20px; border-radius: 50%;
+    background: var(--icon-light); color: var(--navy);
     display: grid; place-items: center;
     font-size: 34px; font-weight: 700;
     box-shadow: 0 8px 24px rgba(0,0,0,.25);
   }
-  h1 { font-size: 26px; font-weight: 700; text-transform: uppercase; line-height: 1.15; letter-spacing: .3px; }
+  h1 { font-size: clamp(24px, 6.4vw, 28px); font-weight: 700; text-transform: uppercase; line-height: 1.15; letter-spacing: .3px; }
   .pill {
-    display: inline-block; margin-top: 14px;
-    padding: 7px 18px; border-radius: 999px;
+    display: inline-block; padding: 7px 18px; border-radius: 999px;
     font-size: 14px; text-transform: uppercase; letter-spacing: .3px;
   }
-  .pill.outline { border: 1.5px solid #fff; color: #fff; }
-  .pill.fill { background: var(--blue); color: #fff; margin: 0 0 14px; font-size: 13px; }
+  .pill.outline { border: 1.5px solid #fff; color: #fff; margin-top: 14px; }
+  .pill.fill { background: var(--blue); color: #fff; margin-bottom: 14px; font-size: 13px; }
 
-  .card {
-    background: #fff; border-radius: 16px; box-shadow: var(--shadow);
-    padding: 20px;
-  }
-  .main { margin-top: -36px; position: relative; }
+  /* QR — виден только на компьютере */
+  .qr { display: none; }
+
+  /* ---------- Карточки ---------- */
+  .card { background: #fff; border-radius: 16px; box-shadow: var(--shadow); padding: 20px; }
+  .main { margin-top: calc(-36px - var(--gap)); position: relative; }
 
   .save {
     display: flex; align-items: center; justify-content: center; gap: 10px;
     width: 100%; padding: 16px;
     background: var(--navy); color: #fff; text-decoration: none;
     border-radius: 999px; font-size: 16px; font-weight: 700; text-transform: uppercase; letter-spacing: .3px;
+    transition: background .2s;
   }
   .save svg { width: 22px; height: 22px; }
-  .save:active, .act:active, .row:active { transform: scale(.98); }
+  .save:hover { background: #142A6A; }
 
   .actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 16px; }
   .act {
@@ -82,7 +87,11 @@
     padding: 14px 4px; border-radius: 16px;
     background: var(--ice); color: var(--navy); text-decoration: none;
     font-size: 13px; font-weight: 700; text-transform: uppercase;
+    transition: background .2s, transform .1s;
   }
+  .act:hover { background: #D3E2F4; }
+  .save:active, .act:active, .row:active { transform: scale(.98); }
+
   .ic {
     width: 48px; height: 48px; border-radius: 50%; flex: none;
     background: var(--icon); color: #fff;
@@ -92,14 +101,15 @@
   .ic.light { background: var(--icon-light); color: var(--navy); width: 44px; height: 44px; box-shadow: inset 0 0 0 1px #D5DFEE; }
   .ic.light svg { width: 22px; height: 22px; }
 
-  .block { margin-top: 16px; }
   .row {
     display: flex; align-items: center; gap: 14px;
-    padding: 12px 0; color: inherit; text-decoration: none;
+    padding: 12px 0; color: inherit; text-decoration: none; min-width: 0;
   }
   .row + .row { border-top: 1px solid var(--ice); }
+  .row > div { min-width: 0; }
   .row small { display: block; color: var(--blue); font-size: 12px; text-transform: uppercase; letter-spacing: .3px; margin-bottom: 3px; }
-  .row span { font-size: 15px; word-break: break-all; color: #000; }
+  .row span { font-size: 15px; overflow-wrap: anywhere; color: #000; }
+  a.row:hover span { color: var(--blue); }
 
   .share {
     display: block; width: 100%; margin-top: 16px; padding: 13px;
@@ -107,15 +117,69 @@
     color: var(--navy); font: inherit; font-size: 14px; text-transform: uppercase; letter-spacing: .3px;
     cursor: pointer;
   }
-  footer { text-align: center; color: var(--grey); font-size: 12px; margin-top: 24px; }
+  .share:hover { background: var(--ice); }
+  footer { text-align: center; color: var(--grey); font-size: 12px; }
+
+  /* ---------- Планшет ---------- */
+  @media (min-width: 600px) {
+    .wrap { max-width: 560px; padding-top: 32px; }
+    .hero { margin: 0; border-radius: 24px; padding: 48px 32px 72px; }
+    .avatar { width: 112px; height: 112px; font-size: 40px; }
+    .card { padding: 24px; }
+    .main { margin-top: calc(-48px - var(--gap)); margin-inline: 20px; }
+  }
+
+  /* ---------- Компьютер: две колонки ---------- */
+  @media (min-width: 960px) {
+    :root { --gap: 24px; }
+    body { display: grid; place-items: center; padding: 40px 0; }
+    .wrap {
+      max-width: 1040px; padding: 0 32px;
+      grid-template-columns: 400px 1fr;
+      grid-template-areas: "hero main" "hero contacts" "foot foot";
+      align-items: start;
+    }
+    .hero {
+      grid-area: hero; align-self: stretch;
+      padding: 48px 36px; justify-content: center;
+    }
+    .main { grid-area: main; margin: 0; }
+    .contacts { grid-area: contacts; }
+    footer { grid-area: foot; }
+    .card { padding: 28px; }
+    .avatar { width: 120px; height: 120px; font-size: 42px; }
+    h1 { font-size: 30px; }
+    .qr {
+      display: block; margin-top: 32px; text-align: center;
+      font-size: 13px; color: var(--ice); line-height: 1.4;
+    }
+    .qr img {
+      display: block; width: 168px; height: 168px; margin: 0 auto 12px;
+      background: #fff; border-radius: 16px; padding: 10px;
+    }
+    .actions { gap: 16px; }
+    .act { padding: 20px 8px; font-size: 14px; }
+    .ic { width: 56px; height: 56px; }
+    .ic svg { width: 28px; height: 28px; }
+    .wrap { grid-template-rows: auto 1fr auto; }
+    .contacts { align-self: stretch; }
+    .row { padding: 14px 0; }
+    .row span { font-size: 16px; }
+    .share { display: none !important; }
+  }
 </style>
 </head>
 <body>
 <div class="wrap">
   <header class="hero">
+    <div class="emblem" aria-hidden="true"></div>
     <div class="avatar" aria-hidden="true">НТ</div>
     <h1>Никита Ткаченко</h1>
     <div class="pill outline">АНО «ЭИСИ»</div>
+    <div class="qr">
+      <img src="qr.svg" alt="QR-код визитки">
+      Отсканируйте телефоном,<br>чтобы открыть визитку
+    </div>
   </header>
 
   <main class="main card">
@@ -123,13 +187,12 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7.5" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"/><path d="M19 8v6M16 11h6"/></svg>
       Сохранить в контакты
     </a>
-
     <div class="actions">
       <a class="act" href="tel:+79889578338">
         <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2.5" width="10" height="19" rx="1.6"/><path d="M11 18.5h2"/></svg></span>
         Звонок
       </a>
-      <a class="act" href="https://t.me/kbelof">
+      <a class="act" href="https://t.me/kbelof" target="_blank" rel="noopener">
         <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 4 3 11.2l6 2.2L18 7l-7 8 7.3 5.3z"/><path d="m11 15-2 5 .1-6.6"/></svg></span>
         Telegram
       </a>
@@ -140,23 +203,25 @@
     </div>
   </main>
 
-  <section class="card block">
+  <section class="card contacts">
     <div class="pill fill">Контакты</div>
-    <a class="row" href="tel:+79889578338">
-      <span class="ic light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2.5" width="10" height="19" rx="1.6"/><path d="M11 18.5h2"/></svg></span>
-      <div><small>Телефон</small><span>+7 988 957-83-38</span></div>
-    </a>
-    <a class="row" href="mailto:nikita-tkachenko-2002@mail.ru">
-      <span class="ic light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5" width="19" height="14"/><path d="m2.5 5 9.5 8 9.5-8"/></svg></span>
-      <div><small>Почта</small><span>nikita-tkachenko-2002@mail.ru</span></div>
-    </a>
-    <a class="row" href="https://t.me/kbelof">
-      <span class="ic light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 4 3 11.2l6 2.2L18 7l-7 8 7.3 5.3z"/><path d="m11 15-2 5 .1-6.6"/></svg></span>
-      <div><small>Telegram</small><span>@kbelof</span></div>
-    </a>
-    <div class="row">
-      <span class="ic light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V8l7-4.5L19 8v13M9.5 21v-5.5h5V21M9 10.5h.01M15 10.5h.01"/></svg></span>
-      <div><small>Организация</small><span>АНО «ЭИСИ»</span></div>
+    <div class="contacts-list">
+      <a class="row" href="tel:+79889578338">
+        <span class="ic light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2.5" width="10" height="19" rx="1.6"/><path d="M11 18.5h2"/></svg></span>
+        <div><small>Телефон</small><span>+7 988 957-83-38</span></div>
+      </a>
+      <a class="row" href="mailto:nikita-tkachenko-2002@mail.ru">
+        <span class="ic light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5" width="19" height="14"/><path d="m2.5 5 9.5 8 9.5-8"/></svg></span>
+        <div><small>Почта</small><span>nikita-tkachenko-2002@mail.ru</span></div>
+      </a>
+      <a class="row" href="https://t.me/kbelof" target="_blank" rel="noopener">
+        <span class="ic light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 4 3 11.2l6 2.2L18 7l-7 8 7.3 5.3z"/><path d="m11 15-2 5 .1-6.6"/></svg></span>
+        <div><small>Telegram</small><span>@kbelof</span></div>
+      </a>
+      <div class="row">
+        <span class="ic light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V8l7-4.5L19 8v13M9.5 21v-5.5h5V21M9 10.5h.01M15 10.5h.01"/></svg></span>
+        <div><small>Организация</small><span>АНО «ЭИСИ»</span></div>
+      </div>
     </div>
     <button class="share" id="share" hidden>Поделиться контактом</button>
   </section>
