@@ -47,7 +47,7 @@
     text-align: center;
     display: flex; flex-direction: column; align-items: center;
   }
-  .emblem { display: none; }
+  .emblem { height: 104px; margin-bottom: 22px; filter: drop-shadow(0 6px 16px rgba(0,0,0,.35)); }
   .emblem img { display: block; height: 100%; width: auto; }
   .avatar {
     width: 96px; height: 96px; margin-bottom: 20px; border-radius: 50%;
@@ -124,7 +124,7 @@
   @media (min-width: 600px) {
     .wrap { max-width: 560px; padding-top: 32px; }
     .hero { margin: 0; border-radius: 24px; padding: 48px 32px 72px; }
-    .avatar { width: 112px; height: 112px; font-size: 40px; }
+    .emblem { height: 120px; }
     .card { padding: 24px; }
     .main { margin-top: calc(-48px - var(--gap)); margin-inline: 20px; }
   }
@@ -147,7 +147,7 @@
     .contacts { grid-area: contacts; }
     footer { grid-area: foot; }
     .card { padding: 28px; }
-    .avatar { width: 120px; height: 120px; font-size: 42px; }
+    .emblem { height: 140px; margin-bottom: 26px; }
     h1 { font-size: 30px; }
     .qr {
       display: block; margin-top: 32px; text-align: center;
@@ -172,8 +172,7 @@
 <body>
 <div class="wrap">
   <header class="hero">
-    <div class="emblem" aria-hidden="true"></div>
-    <div class="avatar" aria-hidden="true">НТ</div>
+    <div class="emblem"><img src="gerb.svg" alt="Герб Российской Федерации"></div>
     <h1>Никита Ткаченко</h1>
     <div class="pill outline">АНО «ЭИСИ»</div>
     <div class="qr">
