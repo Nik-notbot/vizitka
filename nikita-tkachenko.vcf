@@ -1,0 +1,10 @@
+BEGIN:VCARD
+VERSION:3.0
+N:Ткаченко;Никита;;;
+FN:Никита Ткаченко
+ORG:АНО «ЭИСИ»
+TEL;TYPE=CELL:+79889578338
+EMAIL;TYPE=WORK:nikita-tkachenko-2002@mail.ru
+URL:https://t.me/kbelof
+X-SOCIALPROFILE;TYPE=telegram:https://t.me/kbelof
+END:VCARD
